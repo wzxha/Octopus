@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_50"
+               BlueprintIdentifier = "OBJ_51"
                BuildableName = "CommandLineKit.framework"
                BlueprintName = "CommandLineKit"
                ReferencedContainer = "container:Octopus.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_59"
+               BlueprintIdentifier = "OBJ_60"
                BuildableName = "Rainbow.framework"
                BlueprintName = "Rainbow"
                ReferencedContainer = "container:Octopus.xcodeproj">
@@ -42,7 +42,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_76"
+               BlueprintIdentifier = "OBJ_77"
                BuildableName = "Spectre.framework"
                BlueprintName = "Spectre"
                ReferencedContainer = "container:Octopus.xcodeproj">
@@ -56,7 +56,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_90"
+               BlueprintIdentifier = "OBJ_91"
                BuildableName = "PathKit.framework"
                BlueprintName = "PathKit"
                ReferencedContainer = "container:Octopus.xcodeproj">
@@ -70,7 +70,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_99"
+               BlueprintIdentifier = "OBJ_100"
                BuildableName = "Octopus"
                BlueprintName = "Octopus"
                ReferencedContainer = "container:Octopus.xcodeproj">
@@ -84,7 +84,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_116"
+               BlueprintIdentifier = "OBJ_117"
                BuildableName = "OctopusKit.framework"
                BlueprintName = "OctopusKit"
                ReferencedContainer = "container:Octopus.xcodeproj">
@@ -102,7 +102,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_131"
+               BlueprintIdentifier = "OBJ_133"
                BuildableName = "OctopusTests.xctest"
                BlueprintName = "OctopusTests"
                ReferencedContainer = "container:Octopus.xcodeproj">
@@ -125,7 +125,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "OBJ_50"
+            BlueprintIdentifier = "OBJ_51"
             BuildableName = "CommandLineKit.framework"
             BlueprintName = "CommandLineKit"
             ReferencedContainer = "container:Octopus.xcodeproj">

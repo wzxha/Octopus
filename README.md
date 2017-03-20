@@ -3,7 +3,7 @@ A command tool to package multiple projects
 
 # Use
 1. `swift package update`
-2. `swift package generate-xcodeproj`
+2. `swift build`
 3. `./.build/debug/Octopus -h`
 
 # TODO

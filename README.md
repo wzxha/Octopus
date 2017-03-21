@@ -11,7 +11,7 @@ Support:
 3. `./.build/debug/Octopus -h`
 
 ## Help
-```shell
+```
 Usage: ./.build/debug/Octopus [options]
   -p, --project:
       Path to the project that you want package

@@ -28,15 +28,52 @@
 
 import Foundation
 
-protocol Modify {
-    var info: String { get }
-    
-    func modify(bundleId: String)
+internal enum PlistKey: String {
+    case bundleId = "CFBundleIdentifier"
+    case bundleName = "CFBundleName"
+    case bundleShortVersion = "CFBundleShortVersionString"
 }
 
-extension Modify {
-    func modify(bundleId: String) {
-        // TODO: 
+internal protocol Modify {
+    var info: String { get }
+    
+    func modify(bundleId: String, bundleName: String) -> NSDictionary
+    
+    func restore(origin: NSDictionary)
+}
+
+internal extension Modify {
+    
+    func modify(bundleId: String, bundleName: String) -> NSDictionary {
+        if let originDictionary = read() {
+            var writeDictionary = originDictionary
+            write(&writeDictionary, key: .bundleId, value: bundleId)
+            write(&writeDictionary, key: .bundleName, value: bundleName)
+            save(writeDictionary)
+            return originDictionary
+        } else {
+            log("Invalid info.plist path", type: .error)
+            return [:]
+        }
+    }
+    
+    private func read() -> NSDictionary? {
+        return NSDictionary(contentsOfFile: info)
+    }
+    
+    private func write(_ dictionary: inout NSDictionary, key: PlistKey, value: String) {
+        log("change info.plist: set \(key.rawValue)'s value to \(value)...")
+        dictionary.setValue(value, forKey: key.rawValue)
+    }
+    
+    private func save(_ dictionary: NSDictionary) {
+        log("save info.plist")
+        dictionary.write(toFile: info, atomically: true)
+    }
+    
+    func restore(origin: NSDictionary) {
+        log("restore info.plist")
+        save(origin)
     }
 }
 

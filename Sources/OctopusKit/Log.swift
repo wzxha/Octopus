@@ -26,13 +26,14 @@
 //  THE SOFTWARE.
 
 import Foundation
+import Rainbow
 
-enum LogType {
+internal enum LogType {
     case normal
     case error
 }
 
-func log(_ s: String, type: LogType = .normal) {
+internal func log(_ s: String, type: LogType = .normal) {
     switch type {
     case .normal:
         print(s.green.bold)

@@ -28,30 +28,29 @@
 
 import Foundation
 import PathKit
-import Rainbow
 
-enum BuildAction: String {
+public enum Configuration: String {
+    case debug   = "Debug"
+    case release = "Release"
+}
+
+private enum BuildAction: String {
     case clean         = "clean"
     case build         = "build"
     case archive       = "archive"
     case exportArchive = "-exportArchive"
 }
 
-enum Configuration: String {
-    case debug   = "Debug"
-    case release = "Release"
-}
-
-protocol Package {
+internal protocol Package {
     var project: String { get }
     var scheme: String { get }
-    var archivePath: String { get }
-    var exportPath: String { get }
     
-    func package(bundleId: String, configuration: Configuration)
+    func deleteLast()
+    func deleteArchive()
+    func package(bundleId: String, bundleName: String, configuration: Configuration)
 }
 
-extension Package {
+internal extension Package {
     var path: String {
         var path: [String] = project.components(separatedBy: "/")
         path.removeLast()
@@ -66,7 +65,7 @@ extension Package {
         return "\(path)/build/🔧🐙🔧/"
     }
     
-    func package(bundleId: String = "normal", configuration: Configuration = .release) {
+    func package(bundleId: String, bundleName: String, configuration: Configuration = .release) {
         log("package...project:\(project)...path:\(path)")
         
         guard project.hasSuffix(".xcodeproj") || project.hasSuffix(".xcworkspace") else {
@@ -81,15 +80,24 @@ extension Package {
             return
         }
         
-        delete()
         clean()
         archive(configuration: configuration)
-        export(bundleId: bundleId, configuration: configuration)
+        export(bundleId: bundleId, bundleName: bundleName, configuration: configuration)
     }
     
-    func delete() {
-        let path = Path("\(self.path)/build/🔧🐙🔧/")
+    func deleteLast() {
+        log("delete last...")
         
+        delete(path: Path("\(self.path)/build/🔧🐙🔧/"))
+    }
+    
+    func deleteArchive() {
+        log("delete archive...")
+        
+        delete(path: Path("\(self.path)/build/🔧🐙🔧/archive"))
+    }
+    
+    private func delete(path: Path) {
         if path.isDirectory {
             
             log("delete...\(path.description)")
@@ -98,7 +106,7 @@ extension Package {
         }
     }
     
-    func clean() {
+    private func clean() {
         log("clean...")
 
         let shell = [BuildAction.clean.rawValue]
@@ -106,7 +114,7 @@ extension Package {
         try? run(shell)
     }
     
-    func archive(configuration: Configuration) {
+    private func archive(configuration: Configuration) {
         log("archive...\(archivePath)")
 
         let shell = [BuildAction.archive.rawValue,
@@ -117,12 +125,12 @@ extension Package {
         try? run(shell)
     }
     
-    func export(bundleId: String, configuration: Configuration) {
+    private func export(bundleId: String, bundleName: String, configuration: Configuration) {
         log("export...\(exportPath)")
 
         let shell = [BuildAction.exportArchive.rawValue,
                      "-archivePath", archivePath,
-                     "-exportPath", exportPath + scheme.lowercased() + "_" + configuration.rawValue.lowercased() + "_" + "\(bundleId)" + ".ipa",
+                     "-exportPath", exportPath + scheme.lowercased() + "_" + configuration.rawValue.lowercased() + "_\(bundleId)_\(bundleName).ipa",
                      "-exportFormat", "ipa"]
         
         try? run(shell)

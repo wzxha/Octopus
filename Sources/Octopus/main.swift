@@ -35,31 +35,67 @@ import OctopusKit
 
 let cli = CommandLineKit.CommandLine()
 
-let projectOption = StringOption(shortFlag: "p",
-                                 longFlag: "project",
-                                 helpMessage: "Path to the project what you want package")
+let projectOption =
+    StringOption(shortFlag: "p",
+    
+                 longFlag: "project",
+                 
+                 helpMessage: "Path to the project that you want package")
 
-let workspaceOption = StringOption(shortFlag: "w",
-                                 longFlag: "workspace",
-                                 helpMessage: "Path to the workspace what you want package")
+let workspaceOption =
+    StringOption(shortFlag: "w",
+                 
+                 longFlag: "workspace",
+                 
+                 helpMessage: "Path to the workspace that you want package")
 
 let schemeOption = StringOption(shortFlag: "s",
                                 longFlag: "scheme",
-                                helpMessage: "Scheme to the project what you want package")
+                                helpMessage: "Scheme to the project that you want package")
 
-let configurationOption = MultiStringOption(shortFlag: "c",
-                                            longFlag: "configuration",
-                                            helpMessage: "Configuration to the project what you want package")
+let configurationOption =
+    MultiStringOption(shortFlag: "c",
+                      
+                      longFlag: "configuration",
+                      
+                      helpMessage: "Configuration to the project that you want package")
 
-let bundleIdsOption = MultiStringOption(shortFlag: "b",
-                                        longFlag: "bundleId",
-                                        helpMessage: "Bundle ID to the project what you want package")
+let bundleIdsOption =
+    MultiStringOption(shortFlag: "b",
+                      
+                      longFlag: "bundleId",
+                      
+                      helpMessage: "Bundle ID to the project that you want package")
 
-let help = BoolOption(shortFlag: "h",
-                      longFlag: "help",
-                      helpMessage: "Prints a help message.")
+let bundleNameOption =
+    MultiStringOption(shortFlag: "n",
+                      
+                      longFlag: "bundleName",
+                      
+                      helpMessage: "Bundle Name to the project that you want package")
 
-cli.addOptions(projectOption, workspaceOption, schemeOption, bundleIdsOption, help)
+let infoOption =
+    StringOption(shortFlag: "i",
+                 
+                 longFlag: "info",
+                 
+                 helpMessage: "Info.plist's path to the project that you want package")
+
+let help =
+    BoolOption(shortFlag: "h",
+               
+               longFlag: "help",
+               
+               helpMessage: "Prints a help message.")
+
+cli.addOptions(projectOption,
+               workspaceOption,
+               schemeOption,
+               bundleIdsOption,
+               bundleNameOption,
+               configurationOption,
+               infoOption,
+               help)
 
 cli.formatOutput = { s, type in
     var str: String
@@ -93,12 +129,13 @@ let project = projectOption.value ?? ""
 let workspace = workspaceOption.value ?? ""
 let scheme = schemeOption.value ?? ""
 let configurations = configurationOption.value ?? []
-let bundleIds = bundleIdsOption.value ?? [""]
+let bundleIds = bundleIdsOption.value ?? ["normal"]
+let bundleNames = bundleNameOption.value ?? ["normal"]
+let info = infoOption.value ?? ""
 
+let octopus = Octopus(project: project, workspace: workspace, scheme: scheme, info: info)
 
-let octopus = Octopus(project: project, workspace: workspace, scheme: scheme, info: "")
-
-octopus.package(bundleIds: bundleIds, configurations: configurations)
+octopus.package(bundleIds: bundleIds, bundleNames: bundleNames, configurations: configurations)
 
 
 

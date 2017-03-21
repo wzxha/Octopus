@@ -29,8 +29,8 @@
 import Foundation
 import PathKit
 
-// An 🐙 that can be packaged and modified
-public struct Octopus: Package, Modify {
+// An 🐙 that can be modified and packaged
+public struct Octopus: Modify, Package {
     var project: String
     var scheme: String
     var info: String
@@ -51,23 +51,47 @@ public struct Octopus: Package, Modify {
         }
         
         self.info = info
+        
+        deleteLast()
     }
     
-    public func package(bundleIds: [String], configurations: [String]) -> Void {
+    public func package(bundleIds: [String], bundleNames: [String], configurations: [String]) {
+        var originDictionary: NSDictionary = [:]
+        
         for (index, bundleId) in bundleIds.enumerated() {
-            modify(bundleId: bundleId)
+            
+            guard bundleId == "normal" || info != "" else {
+                log("If you want to change bundleID, you need give 🐙 a info.plist's path", type: .error)
+                continue
+            }
+            
+            var bundleName = "";
+            
+            if bundleNames.count > index {
+                bundleName = bundleNames[index]
+            }
             
             var configuration = "";
             
             if configurations.count > index {
                 configuration = configurations[index]
             }
+            
+            originDictionary = modify(bundleId: bundleId, bundleName: bundleName)
 
             if configuration.lowercased() == "debug" {
-                package(configuration: .debug)
+                package(bundleId: bundleId, bundleName: bundleName, configuration: .debug)
             } else {
-                package(configuration: .release)
+                package(bundleId: bundleId, bundleName: bundleName, configuration: .release)
             }
         }
+        
+        if originDictionary != [:] {
+            restore(origin: originDictionary)
+        }
+        
+        deleteArchive()
+        
+        log("God bless! YOU ARE SUCCEED!")
     }
 }

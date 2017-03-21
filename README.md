@@ -34,8 +34,9 @@ Usage: ./.build/debug/Octopus [options]
 ## TODO
 1. ~~support multiple bundleID~~
 2. ~~support multiple displayName~~
-3. Code Coverage 100%
-4. more..
+3. Code Coverage 100% 🕸
+4. More exception handling 🛠
+5. more..
 
 ## If you want a xcodeproj
 `swift package generate-xcodeproj`

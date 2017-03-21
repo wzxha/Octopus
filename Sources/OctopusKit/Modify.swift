@@ -37,33 +37,45 @@ internal enum PlistKey: String {
 internal protocol Modify {
     var info: String { get }
     
-    func modify(bundleId: String, bundleName: String) -> NSDictionary
+    func modify(bundleId: String, bundleName: String) -> NSDictionary?
     
     func restore(origin: NSDictionary)
 }
 
 internal extension Modify {
     
-    func modify(bundleId: String, bundleName: String) -> NSDictionary {
-        if let originDictionary = read() {
-            var writeDictionary = originDictionary
-            write(&writeDictionary, key: .bundleId, value: bundleId)
-            write(&writeDictionary, key: .bundleName, value: bundleName)
-            save(writeDictionary)
-            return originDictionary
-        } else {
-            log("Invalid info.plist path", type: .error)
-            return [:]
+    @discardableResult
+    func modify(bundleId: String, bundleName: String) -> NSDictionary? {
+        guard info.lowercased().hasSuffix("info.plist") else {
+            log("Invalid info.plist path: \(info)", type: .error)
+            return nil
         }
+        
+        if let originDictionary = read() {
+            var dict = [String : Any]()
+            for (key, value) in originDictionary {
+                dict[key as! String] = value
+            }
+            
+            if dict.keys.count > 0 {
+                write(&dict, key: .bundleId, value: bundleId)
+                write(&dict, key: .bundleName, value: bundleName)
+                save(dict as NSDictionary)
+                return originDictionary
+            }
+        }
+        
+        log("Invalid info.plist path: \(info)", type: .error)
+        return nil
     }
     
     private func read() -> NSDictionary? {
         return NSDictionary(contentsOfFile: info)
     }
     
-    private func write(_ dictionary: inout NSDictionary, key: PlistKey, value: String) {
+    private func write(_ dictionary: inout Dictionary<String, Any>, key: PlistKey, value: String) {
         log("change info.plist: set \(key.rawValue)'s value to \(value)...")
-        dictionary.setValue(value, forKey: key.rawValue)
+        dictionary[key.rawValue] = value
     }
     
     private func save(_ dictionary: NSDictionary) {

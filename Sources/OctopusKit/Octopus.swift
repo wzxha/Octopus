@@ -56,28 +56,30 @@ public struct Octopus: Modify, Package {
     }
     
     public func package(bundleIds: [String], bundleNames: [String], configurations: [String]) {
-        var originDictionary: NSDictionary = [:]
+        var originDictionary: NSDictionary?
         
         for (index, bundleId) in bundleIds.enumerated() {
             
             guard bundleId == "normal" || info != "" else {
-                log("If you want to change bundleID, you need give 🐙 a info.plist's path", type: .error)
+                log("If you want to change bundleID, you need give 🐙 info.plist's path", type: .error)
                 continue
             }
             
             var bundleName = "";
-            
             if bundleNames.count > index {
                 bundleName = bundleNames[index]
             }
             
             var configuration = "";
-            
             if configurations.count > index {
                 configuration = configurations[index]
             }
             
-            originDictionary = modify(bundleId: bundleId, bundleName: bundleName)
+            if index == 0 {
+                originDictionary = modify(bundleId: bundleId, bundleName: bundleName)
+            } else {
+                modify(bundleId: bundleId, bundleName: bundleName)
+            }
 
             if configuration.lowercased() == "debug" {
                 package(bundleId: bundleId, bundleName: bundleName, configuration: .debug)
@@ -86,8 +88,8 @@ public struct Octopus: Modify, Package {
             }
         }
         
-        if originDictionary != [:] {
-            restore(origin: originDictionary)
+        if let origin = originDictionary {
+            restore(origin: origin)
         }
         
         deleteArchive()

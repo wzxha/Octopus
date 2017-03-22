@@ -9,10 +9,17 @@ Support:
 - multi-BundleName
 - multi-Configuration
 
+## Install
+```shell
+> git clone https://github.com/Wzxhaha/Octopus
+> cd Octopus
+> ./install.sh
+```
+
 ## Use
-1. `swift package update`
-2. `swift build`
-3. `./.build/debug/Octopus -h`
+```shell
+> octopus -h
+```
 
 ## Help
 ```

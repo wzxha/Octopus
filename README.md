@@ -1,4 +1,8 @@
 # Octopus 🐙
+[![SPM](https://img.shields.io/badge/SPM-ready-orange.svg)](https://swift.org/package-manager/)
+[![codecov](https://img.shields.io/codecov/c/github/Wzxhaha/Octopus.svg)](https://codecov.io/github/Wzxhaha/Octopus?branch=master)
+[![license](https://img.shields.io/badge/LICENSE-MIT-nil.svg?colorA=404040&colorB=5B5A5A)](https://github.com/Wzxhaha/Octopus/blob/master/LICENSE)
+
 A command tool to package multiple projects <br/>
 Support:
 - multi-BundleID

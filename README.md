@@ -9,10 +9,17 @@ Support:
 - multi-BundleName
 - multi-Configuration
 
+## Install
+```shell
+> git clone https://github.com/Wzxhaha/Octopus
+> cd Octopus
+> ./install.sh
+```
+
 ## Use
-1. `git clone https://github.com/Wzxhaha/Octopus`
-2. `cd Octopus`
-3. `./install.sh`
+```shell
+> octopus -h
+```
 
 ## Help
 ```

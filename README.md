@@ -10,9 +10,9 @@ Support:
 - multi-Configuration
 
 ## Use
-1. `swift package update`
-2. `swift build`
-3. `./.build/debug/Octopus -h`
+1. `git clone https://github.com/Wzxhaha/Octopus`
+2. `cd Octopus`
+3. `./install.sh`
 
 ## Help
 ```

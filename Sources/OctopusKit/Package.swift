@@ -145,7 +145,7 @@ internal extension Package {
         task.waitUntilExit()
         
         guard task.terminationStatus == 0 else {
-            log("\(args.first) error: \(task.terminationStatus)", type: .error)
+            log("\(String(describing: args.first)) error: \(task.terminationStatus)", type: .error)
             exit(0)
         }
     }
